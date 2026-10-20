@@ -215,6 +215,24 @@ function initGsap() {
   window.addEventListener('load', () => ScrollTrigger.refresh());
 }
 
+/* ---------- Hero code-card 3D tilt ---------- */
+function initHeroTilt() {
+  const wrap = document.getElementById('hero-visual');
+  if (!wrap || window.matchMedia('(hover: none)').matches) return;
+  const card = wrap.querySelector('.code-card');
+  wrap.addEventListener('mousemove', (e) => {
+    const r = wrap.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    wrap.classList.add('tilting');
+    card.style.transform = `rotateY(${x * 14}deg) rotateX(${-y * 14}deg)`;
+  });
+  wrap.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    wrap.classList.remove('tilting');
+  });
+}
+
 /* ---------- Lottie smile badge (home only) ---------- */
 function initLottie() {
   const el = document.getElementById('lottie-animation');
@@ -254,4 +272,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initLottie();
   initContactForm();
   initGsap();
+  initHeroTilt();
 });
